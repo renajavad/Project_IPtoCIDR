@@ -1,6 +1,7 @@
 #include "IPtoCidr.cpp"
 #include <gtest/gtest.h>
 #include <vector>
+#include <fstream>
 
 IPtoCIDR cidr;
 
@@ -19,6 +20,36 @@ TEST(cidr, IPtoCIDRTest)
 int main(int argc, char** argv)
 {
 	testing::InitGoogleTest(&argc, argv);
+    IPtoCIDR cidr;
+    std::string IP;
+    int n;
+
+    std::ifstream in("input_IP.txt");
+    if (in.is_open())
+    {
+        std::getline(in, IP);
+        in >> n;
+
+    }
+
+    in.close();
+
+    std::vector<std::string> res = cidr.finalResult(IP, n);
+
+    std::ofstream out("output_IP.txt");
+
+    if (out.is_open())
+    {
+        out << "CIDR blocks: ";
+        for (std::string s : res)
+        {
+            out << '"' << s << '"' << " ";
+        }
+
+    }
+
+    out.close();
+
 
 	return RUN_ALL_TESTS();
 }
